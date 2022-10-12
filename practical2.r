@@ -1,6 +1,6 @@
 
 ################################################################################
-#                     2: The prisoner problem simulation                       #
+##################### 2: The prisoner problem simulation #######################
 ################################################################################
 
 ## Contributors: 
@@ -52,101 +52,107 @@
 
 n <- 100
 
-pone <- function(n, k, strategy, nreps = 1000000){ 
-##This function estimates the probability of a single prisoner succeeding in  
-##finding their number. The function takes arguments n, k(the prisoner’s number)
-##strategy and nreps. nreps is the number of replicate simulations to run in 
-##order to estimate the probability.
+pone <- function(n, k, strategy, nreps = 10000){ 
+## This function estimates the probability of a single prisoner succeeding in  
+## finding their number. The function takes arguments n, k (prisoner’s number)
+## strategy and nreps. nreps is the number of replicate simulations to run in 
+## order to estimate the probability.
   
-  num_success <- 0  ##Initializing number of successful tries. 
-                    ##I.e. how many times the prisoner-k 
-                    ##managed to find the k-card after opening 
-                    ##less or equal to n boxes.
+  num_success <- 0  ## Initializing number of successful tries. 
+                    ## I.e. how many times the prisoner-k 
+                    ## managed to find the k-card after opening 
+                    ## less or equal to n boxes.
   
-  for (i in c(1:nreps)){  ##Iterating over nreps
+  for (i in c(1:nreps)){  ## Iterating over nreps
                                       
-    p_numbers <- c(1:(2*n))           ##Creating an array of box indices. 
-                                      ##The order of the boxes plays no role in
-                                      ##the problem.
+    p_numbers <- c(1:(2*n))           ## Creating an array of box indices. 
+                                      ## The order of the boxes plays no role in
+                                      ## the problem.
     
-    box_content <- sample(p_numbers)  ##Shuffling box indices. This way we 
-                                      ##randomly arrange the cards in the boxes.  
-                                      ##Box k contains box_content[k]
+    box_content <- sample(p_numbers)  ## Shuffling box indices. This way we 
+                                      ## randomly arrange the cards in the   
+                                      ## boxes. Box k contains box_content[k].
 
-    if (strategy == 1){  ##We will examine strategy 1 first.
+    if (strategy == 1){  ## We will examine strategy 1 first.
       
-      path <- c(box_content[k])       ##The path of boxes the prisoner will 
-                                      ##follow is fully dependent on the box
-                                      ##content. The first box choice is always
-                                      ##k (which contains card box_content[k])
+      path <- c(box_content[k])       ## The path of boxes the prisoner will 
+                                      ## follow is fully dependent on the box
+                                      ## content. The first box choice is always
+                                      ## k (which contains card box_content[k])
 
-      j <- 1                          ##Initializing the counter of attempts
+      j <- 1                          ## Initializing the counter of attempts.
       
-      while (j < (n+1)){  ##While the number of tries is smaller or equal to n:
+      while (j < (n+1)){  ## While the number of tries is smaller or equal to n:
         
-        if (path[j] == k){  ##if the j-th card number in the path is the 
-                            ##prisoners number:
+        if (path[j] == k){  ## if the j-th card number in the path is the 
+                            ## prisoners number:
                                                                                 
-          num_success <- num_success + 1  ##We found the correct card on time, 
-                                          ##thus increase the number of 
-                                          ##successes by 1.
+          num_success <- num_success + 1  ## We found the correct card on time, 
+                                          ## thus increase the number of 
+                                          ## successes by 1.
           
-          j <- n + 1                      ##This is done in order to break the   
-                                          ##while loop if we find the correct 
-        }                                 ##card on time.
+          j <- n + 1                      ## This is done in order to break the   
+                                          ## while loop if we find the correct 
+        }                                 ## card on time.
         
-        else{ ##if the j-th card number in the path is not the prisoners number
+        else{ ## if the j-th card number in the path is not the prisoners number
           
-          path[j+1] <- box_content[path[j]]   ##Add the next card in the path.
-                                              ##box_content[path[j]] = 
-                                              ##box_content[box_content[j-1]]
-                                              ##etc.
+          path[j+1] <- box_content[path[j]]   ## Add the next card in the path.
+                                              ## box_content[path[j]] = 
+                                              ## box_content[box_content[j-1]]
+                                              ## etc.
+          
+          j <- j + 1                          ## Increase counter to check the 
+        }                                     ## check the next box.
+      }
+    }
+    
+    else if (strategy == 2){ ## Strategy number 2
+      
+      first <- sample((p_numbers), 1) ## This time the prisoner chooses the 
+      path <- c(box_content[first])   ## first box randomly. The rest is the 
+                                      ## same as strategy number 1.
+      
+      j <- 1                          ## Initializing the counter of attempts
+      
+      while (j < (n+1)){  ## While the number of tries is smaller or equal to n:
+        
+        if (path[j] == k){  ## if the j-th card number in the path is the 
+                            ## prisoners number:
+          
+          num_success <- num_success + 1  ## We found the correct card on time, 
+                                          ## thus increase the number of 
+                                          ## successes by 1.
+          
+          j <- n + 1                      ## This is done in order to break the   
+                                          ## while loop if we find the correct 
+        }                                 ## card on time.
+        
+        else{ ## if the j-th card number in the path is not the prisoners number
+          
+          path[j+1] <- box_content[path[j]]   ## Add the next card in the path.
+                                              ## box_content[path[j]] = 
+                                              ## box_content[box_content[j-1]]
+                                              ## etc.
           
           j <- j + 1
         }
       }
     }
-    
-    else if (strategy == 2){
+    else{
       
-      first <- sample((p_numbers), 1) ##This time the prisoner chooses the first
-      path <- c(box_content[first])   ##box randomly
+      n_choices <- sample((p_numbers), n)
       
-      j <- 1                          ##Initializing the counter of attempts
+      if (k %in% n_choices){num_success <- num_success + 1}
       
-      while (j < (n+1)){  ##While the number of tries is smaller or equal to n:
-        
-        if (path[j] == k){  ##if the j-th card number in the path is the 
-                            ##prisoners number:
-          
-          num_success <- num_success + 1  ##We found the correct card on time, 
-                                          ##thus increase the number of 
-                                          ##successes by 1.
-          
-          j <- n + 1                      ##This is done in order to break the   
-                                          ##while loop if we find the correct 
-        }                                 ##card on time.
-        
-        else{ ##if the j-th card number in the path is not the prisoners number
-          
-          path[j+1] <- box_content[path[j]]   ##Add the next card in the path.
-                                              ##box_content[path[j]] = 
-                                              ##box_content[box_content[j-1]]
-                                              ##etc.
-          
-          j <- j + 1
-        }
-      }#while j < n+1
-
     }
-  }#iterations in nreps
+  }
   prob <- num_success/nreps
   return(prob)
 }
 
-prob <- pone(n, 52, strategy = 1)
+prob <- pone(n, 52, strategy = 3)
 prob
-
 
 
 
