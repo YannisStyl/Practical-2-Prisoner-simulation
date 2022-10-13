@@ -210,6 +210,7 @@ Pall = function(n, strategy, nreps = 10000){
             j = j + 1                         ## Counter plus 1 
           }                                   
         }
+        simulation[j] = simulation[j] + 1
       }
       else{                                   ## Strategy number 3
         
@@ -250,10 +251,12 @@ dloop <- function(n, nreps=10000){
   
   freq <- rep(0,length.out=2*n)
   
-    for(j in c(1:2*n)){
-      temp
-    }
-  
+  for(i in 1:nreps){
+    
+    simulation <- Pall(n, strategy == 1, nreps = 1)[1]
+    
+    freq <- freq + simulation
+  }
   
 }
 
