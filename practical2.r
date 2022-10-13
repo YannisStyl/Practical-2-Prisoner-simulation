@@ -72,39 +72,15 @@ pone <- function(n, k, strategy, nreps = 10000){
     box_content <- sample(p_numbers)  ## Shuffling box indices. This way we 
                                       ## randomly arrange the cards in the   
                                       ## boxes. Box k contains box_content[k].
-
-    if (strategy == 1){  ## We will examine strategy 1 first.
+    
+    if (strategy == 1 || strategy == 2){ 
       
-      path <- c(box_content[k])       ## The path of boxes the prisoner will 
+      if (strategy == 1){  ## We will examine strategy 1 first.
+      
+        path <- c(box_content[k])       ## The path of boxes the prisoner will 
                                       ## follow is fully dependent on the box
                                       ## content. The first box choice is always
                                       ## k (which contains card box_content[k])
-
-      j <- 1                          ## Initializing the counter of attempts.
-      
-      while (j < (n+1)){  ## While the number of tries is smaller or equal to n:
-        
-        if (path[j] == k){  ## if the j-th card number in the path is the 
-                            ## prisoners number:
-                                                                                
-          num_success <- num_success + 1  ## We found the correct card on time, 
-                                          ## thus increase the number of 
-                                          ## successes by 1.
-          
-          break                           ## This is done in order to break the   
-                                          ## while loop if we find the correct 
-        }                                 ## card on time.
-        
-        else{ ## if the j-th card number in the path is not the prisoners number
-          
-          path[j+1] <- box_content[path[j]]   ## Add the next card in the path.
-                                              ## box_content[path[j]] = 
-                                              ## box_content[box_content[j-1]]
-                                              ## etc.
-          
-          j <- j + 1                          ## Increase counter to check the 
-        }                                     ## check the next box.
-      }
     }
     
     else if (strategy == 2){ ## Strategy number 2
@@ -112,7 +88,7 @@ pone <- function(n, k, strategy, nreps = 10000){
       first <- sample((p_numbers), 1)    ## This time the prisoner chooses the 
       path <- c(box_content[first])      ## first box randomly. The rest is the 
                                          ## same as strategy number 1.
-      
+    } 
       j <- 1                             ## Initializing the counter of attempts
       
       while (j < (n+1)){  ## While the number of tries is smaller or equal to n:
@@ -127,7 +103,6 @@ pone <- function(n, k, strategy, nreps = 10000){
           break                           ## This is done in order to break the   
                                           ## while loop if we find the correct 
         }                                 ## card on time.
-        
         else{ ## if the j-th card number in the path is not the prisoners number
           
           path[j+1] <- box_content[path[j]]   ## Add the next card in the path.
@@ -137,7 +112,7 @@ pone <- function(n, k, strategy, nreps = 10000){
           
           j <- j + 1
         }
-      }
+      }  
     }
     else{                                     ## Strategy number 3
       
@@ -246,14 +221,5 @@ prob_50_1_pall
 prob_50_2_pall    
 prob_50_3_pall
 
-dloop <- function(n, nreps=10000){
-  
-  freq <- rep(0,length.out=2*n)
-  
-    for(j in c(1:2*n)){
-      temp
-    }
-  
-  
-}
+
 
