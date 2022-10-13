@@ -91,7 +91,7 @@ pone <- function(n, k, strategy, nreps = 10000){
                                           ## thus increase the number of 
                                           ## successes by 1.
           
-          j <- n + 1                      ## This is done in order to break the   
+          break                           ## This is done in order to break the   
                                           ## while loop if we find the correct 
         }                                 ## card on time.
         
@@ -124,7 +124,7 @@ pone <- function(n, k, strategy, nreps = 10000){
                                           ## thus increase the number of 
                                           ## successes by 1.
           
-          j <- n + 1                      ## This is done in order to break the   
+          break                           ## This is done in order to break the   
                                           ## while loop if we find the correct 
         }                                 ## card on time.
         
@@ -227,17 +227,17 @@ Pall = function(n, strategy, nreps = 10000){
   return(prob)
 }
 
-prob_5_1_pall = pall(5, strategy = 1)        ## The probability of open at most 
+prob_5_1_pall = Pall(5, strategy = 1)        ## The probability of open at most 
                                              ## 5 boxes using strategy 1
-prob_5_2_pall = pall(5, strategy = 2)        ## The probability of open at most 
+prob_5_2_pall = Pall(5, strategy = 2)        ## The probability of open at most 
                                              ## 5 boxes using strategy 2
-prob_5_3_pall = pall(5, strategy = 3)        ## The probability of open at most
+prob_5_3_pall = Pall(5, strategy = 3)        ## The probability of open at most
                                              ## 5 boxes using strategy 3
-prob_50_1_pall = pall(50, strategy = 1)      ## The probability of open at most
+prob_50_1_pall = Pall(50, strategy = 1)      ## The probability of open at most
                                              ## 50 boxes using strategy 1
-prob_50_2_pall = pall(50, strategy = 2)      ## The probability of open at most
+prob_50_2_pall = Pall(50, strategy = 2)      ## The probability of open at most
                                              ## 50 boxes using strategy 2
-prob_50_3_pall = pall(50, strategy = 3)      ## The probability of open at most
+prob_50_3_pall = Pall(50, strategy = 3)      ## The probability of open at most
                                              ## 50 boxes using strategy 3
 prob_5_1_pall
 prob_5_2_pall    
@@ -246,5 +246,14 @@ prob_50_1_pall
 prob_50_2_pall    
 prob_50_3_pall
 
-
+dloop <- function(n, nreps=10000){
+  
+  freq <- rep(0,length.out=2*n)
+  
+    for(j in c(1:2*n)){
+      temp
+    }
+  
+  
+}
 
