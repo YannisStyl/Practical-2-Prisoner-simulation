@@ -5,13 +5,13 @@
 
 ## Contributors: 
 ##
-##  Yannis Stylianou (s2448736), Kartik (s2407270), Wang Chuhan(s??????) 
+##  Yannis Stylianou (s2448736), Kartik (s2407270), Wang Chuhan(s2324597) 
 
 #--------------------------    Work Distribution   ----------------------------#
 
 ## Yannis: General comments, Pone function
 ## Kartik: 
-## Wang:   
+## Wang: Pall function
 
 #---------------------------  Problem Description  ----------------------------#
  
@@ -139,20 +139,152 @@ pone <- function(n, k, strategy, nreps = 10000){
         }
       }
     }
-    else{
+    else{                                     ## Strategy number 3
       
-      n_choices <- sample((p_numbers), n)
+      n_choices <- sample((p_numbers), n)     ## Randomly choose n boxes
       
       if (k %in% n_choices){num_success <- num_success + 1}
-      
+                                              ## Identify whether k is selected
     }
   }
-  prob <- num_success/nreps
+  prob <- num_success/nreps                   ## Probability of escape of 
+                                              ## prisoners
   return(prob)
 }
 
 prob <- pone(n, 52, strategy = 3)
 prob
+
+
+pall = function(n, strategy, nreps = 10000){
+## This function estimate the probability of all prisoners finding their number,
+## so that all are released.The function takes arguments n, strategy and nreps.
+## The function returns the probability estimate.
+  num_success = 0              
+  
+  for (i in c(1:nreps)){                   ## iterating over nreps
+    
+    p_numbers = c(1:(2 * n))               ## Creating an array of box indices.
+                                   
+    
+    box_content = sample(p_numbers)        ## randomly arrange the cards in the 
+                                           ## boxes.
+    
+    if (strategy == 1){                    ## We will examine strategy 1 first.
+      
+      count = 0                            ## Count the prisoner who 
+                                           ## successfully found his number.
+      
+      for (num in c(1:(2 * n))){           ## Iterating all prisoners
+        
+        path = c(box_content[num])         ## The path of boxes the prisoner 
+                                           ## will follow is fully dependent
+                                           ## on the box content. The first box 
+                                           ## choice is always No. num
+        
+        j = 1                              ## Initializing the counter of 
+                                           ## attempts.
+        
+        while(j < (n+1)){                  ## While the number of tries is 
+                                           ## smaller or equal to n:
+          
+          if (path[j] == num){             ## if the prisoners' number is in the
+                                           ## j-th path
+            
+            count = count + 1              ## Add one to the number of people 
+            break                          ## who successfully found the card 
+                                           ## and leave the while loop
+          }
+          
+          else{ ## if the j-th card number in the path is not the prisoners number              
+            
+            path[j+1] = box_content[path[j]]  ## Set the number in this box 
+                                              ## to the next path index
+            j = j + 1                         ## Counter plus 1
+          }
+        }
+        if (count == 2 * n){ ## Identify whether every criminal has found 
+                             ## his own number
+          num_success = num_success + 1       ## count the number of successful 
+                                              ## case
+          }
+      }
+    }
+    else if (strategy == 2){ ## strategy 2
+      
+      count = 0                               ## Count the prisoner who 
+                                              ## successfully found his number.
+      for (num in c(1: (2 * n))){             ## Iterating all prisoners
+        
+        first = sample((p_numbers), 1)        ## This time the prisoner chooses 
+                                              ## the first box randomly.
+        path = c(box_content[first])
+        
+        j = 1                                 ## Initializing the counter of 
+                                              ## attempts
+        
+        while(j < (n+1)){                     ## While the number of tries is 
+                                              ## smaller or equal to n:
+          
+          if (path[j] == num){                ## if the prisoners' number is in 
+                                              ## the j-th path          
+            count = count + 1                 ## Add one to the number of people
+            break                             ## who successfully found the card
+                                              ## and leave the while loop
+          }
+          
+          else{
+            path[j+1] = box_content[path[j]]  ## Set the number in this box 
+                                              ## to the next path index
+            
+            j = j + 1                         ## Counter plus 1 
+          }                                   
+        }
+        
+        if (count == 2 * n){## Identify whether every criminal has found 
+                            ## his own number
+          num_success = num_success + 1      ## count the number of successful 
+                                             ## case
+        }
+      }
+    }
+    else{                                    ## Strategy number 3
+      count = 0                              ## Count the prisoner who 
+                                             ## successfully found his number.
+      for (num in c(1:(2 * n))){             ## Iterating all prisoners
+        
+        n_choices = sample((p_numbers),n)    ## Randomly choose n boxes
+        
+        ## Identify whether num is selected
+        if (num %in% n_choices){count = count + 1}
+      }
+        ## Identify whether all the prisoners find their numbers
+      if(count == 2*n){num_success = num_success + 1}
+    }
+  }
+  prob = num_success / nreps                 ## Probability of escape of 
+                                             ## prisoners
+  return(prob)
+}
+
+prob_5_1_pall = pall(5, strategy = 1)        ## The probability of open at most 
+                                             ## 5 boxes using strategy 1
+prob_5_2_pall = pall(5, strategy = 2)        ## The probability of open at most 
+                                             ## 5 boxes using strategy 2
+prob_5_3_pall = pall(5, strategy = 3)        ## The probability of open at most
+                                             ## 5 boxes using strategy 3
+prob_50_1_pall = pall(50, strategy = 1)      ## The probability of open at most
+                                             ## 50 boxes using strategy 1
+prob_50_2_pall = pall(50, strategy = 2)      ## The probability of open at most
+                                             ## 50 boxes using strategy 2
+prob_50_3_pall = pall(50, strategy = 3)      ## The probability of open at most
+                                             ## 50 boxes using strategy 3
+prob_5_1_pall
+prob_5_2_pall    
+prob_5_3_pall
+prob_50_1_pall
+prob_50_2_pall    
+prob_50_3_pall
 
 
 
