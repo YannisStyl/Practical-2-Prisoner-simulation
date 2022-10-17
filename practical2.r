@@ -10,7 +10,7 @@
 #--------------------------    Work Distribution   ----------------------------#
 
 ## Yannis: General comments, Pone function
-## Kartik: dloop function
+## Kartik: Dloop function
 ## Wang: Pall function
 
 #---------------------------  Problem Description  ----------------------------#
@@ -281,6 +281,18 @@ dloop <- function(n, nreps = 10000){
  
  return(probabilities) 
 }
+n=50                                                         ## Using dloop to 
+                                                             ## estimate the 
+Prob<-dloop(n)                                               ## probabilities 
+                                                             ## for n = 50,
 
-dloop(100)
+xx<-c(1:(2*n))                                               ## Creating for x 
+                                                             ## axis for the
+                                                             ## no. of Prisoners
 
+plot(xx,Prob,pch=19,cex=.5,xlab="Prisoner no.",ylab=expression(P(X)))   
+                                                             ## Plotting a graph 
+                                                             ## to show our 
+                                                             ##Probability Dist.  
+
+     
