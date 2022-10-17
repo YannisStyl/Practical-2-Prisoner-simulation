@@ -281,10 +281,12 @@ dloop <- function(n, nreps = 10000){
  
  return(probabilities) 
 }
+
+
 n=50                                                         ## Using dloop to 
                                                              ## estimate the 
 Prob<-dloop(n)                                               ## probabilities 
-                                                             ## for n = 50,
+                                                             ## for n = 50
 
 xx<-c(1:(2*n))                                               ## Creating for x 
                                                              ## axis for the
