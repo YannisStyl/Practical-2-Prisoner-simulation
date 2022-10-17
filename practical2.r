@@ -10,7 +10,7 @@
 #--------------------------    Work Distribution   ----------------------------#
 
 ## Yannis: General comments, Pone function
-## Kartik: 
+## Kartik: dloop function
 ## Wang: Pall function
 
 #---------------------------  Problem Description  ----------------------------#
@@ -52,7 +52,8 @@
 
 n <- 100
 
-pone <- function(n, k, strategy, nreps = 10000){ 
+Pone <- function(n, k, strategy, nreps = 10000){ 
+  
 ## This function estimates the probability of a single prisoner succeeding in  
 ## finding their number. The function takes arguments n, k (prisoner’s number)
 ## strategy and nreps. nreps is the number of replicate simulations to run in 
@@ -174,18 +175,18 @@ Pall = function(n, strategy, nreps = 10000){
           if (path[j] == num){                ## if the prisoners' number is in 
                                               ## the j-th path          
             count = count + 1                 ## Add one to the number of people
-            break                             ## who successfully found the card
-                                              ## and leave the while loop
+                                              ## who successfully found the card
+            break                             ## and leave the while loop
           }
           
           else{
+            
             path[j+1] = box_content[path[j]]  ## Set the number in this box 
                                               ## to the next path index
             
             j = j + 1                         ## Counter plus 1 
           }                                   
         }
-        simulation[j] = simulation[j] + 1
       }
       else{                                   ## Strategy number 3
         
@@ -203,39 +204,83 @@ Pall = function(n, strategy, nreps = 10000){
   return(prob)
 }
 
-prob_5_1_pall = Pall(5, strategy = 1)        ## The probability of open at most 
-                                             ## 5 boxes using strategy 1
-prob_5_2_pall = Pall(5, strategy = 2)        ## The probability of open at most 
-                                             ## 5 boxes using strategy 2
-prob_5_3_pall = Pall(5, strategy = 3)        ## The probability of open at most
-                                             ## 5 boxes using strategy 3
-prob_50_1_pall = Pall(50, strategy = 1)      ## The probability of open at most
-                                             ## 50 boxes using strategy 1
-prob_50_2_pall = Pall(50, strategy = 2)      ## The probability of open at most
-                                             ## 50 boxes using strategy 2
-prob_50_3_pall = Pall(50, strategy = 3)      ## The probability of open at most
-                                             ## 50 boxes using strategy 3
-prob_5_1_pall
-prob_5_2_pall    
-prob_5_3_pall
-prob_50_1_pall
-prob_50_2_pall    
-prob_50_3_pall
+prob_5_1_pall = Pall(5, strategy = 1)        ## The probability of 10 prisoners 
+                                             ## escaping, using strategy 1
 
-<<<<<<< HEAD
+prob_5_2_pall = Pall(5, strategy = 2)        ## The probability of 10 prisoners 
+                                             ## escaping, using strategy 2
 
-=======
-dloop <- function(n, nreps=10000){
-  
-  freq <- rep(0,length.out=2*n)
+prob_5_3_pall = Pall(5, strategy = 3)        ## The probability of 10 prisoners
+                                             ## 5escaping, using strategy 3
+
+prob_50_1_pall = Pall(50, strategy = 1)      ## The probability of 100 prisoners
+                                             ## escaping, using strategy 1
+
+prob_50_2_pall = Pall(50, strategy = 2)      ## The probability of 100 prisoners
+                                             ## escaping, using strategy 2
+
+prob_50_3_pall = Pall(50, strategy = 3)      ## The probability of 100 prisoners
+                                             ## escaping, using strategy 3
+
+dloop <- function(n, nreps = 10000){
+## A loop occurs when some card in the sequence of opened boxes 
+## (under strategy 1 or 2) has the number of the first box opened. 
+## This function estimates the probability of each loop length, from 1 to 2n, 
+## occurring at least once in a random shuffling of cards to boxes. The 
+## functions takes as arguments n (the number of boxes/2) and nreps 
+## (the number of simulations to run in order to estimate the probability).
+## Returns a 2n-vector of probabilities.
+
+      
+  freq <- rep(0,length.out = 2*n)
   
   for(i in 1:nreps){
     
-    simulation <- Pall(n, strategy == 1, nreps = 1)[1]
+    cycle_lengths <- rep(0, length.out = 2*n)
     
-    freq <- freq + simulation
+    permutation <- sample(c(1:(2*n)))
+    
+    path <- c(permutation[1])
+    
+    while (sum(permutation) > 0){
+      
+      i <- 2
+      
+      while (path[1] != permutation[path[i-1]]){
+        
+        path[i] <- permutation[path[i-1]]
+        
+        i <- i + 1
+        
+        }
+      
+      cycle_lengths[length(path)] <- 1
+      
+      permutation[path] <- rep(0, length.out = length(path)) ## Every element of
+                                                             ## the permutation 
+                                                             ## that is in the
+                                                             ## cycle is 
+                                                             ## replaced by 0.
+      
+      first_non_zero = which(permutation != 0)[1]            ## Find the first
+                                                             ## non-zero element
+                                                             ## of the 
+                                                             ## permutation, to 
+                                                             ## begin the new
+                                                             ## cycle.
+      
+      path <- c(permutation[first_non_zero])                 ## Restart the path
+                                                             ## and find new
+    }                                                        ## cycle. 
+    
+    freq <- freq + cycle_lengths
+    
   }
-  
+ 
+ probabilities <- freq/nreps 
+ 
+ return(probabilities) 
 }
->>>>>>> 10f9fd190e8d9d7a7d8b7d7f01f50c614d1e9bb6
+
+dloop(100)
 
