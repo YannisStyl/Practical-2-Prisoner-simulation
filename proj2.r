@@ -175,12 +175,7 @@ Pone <- function(n, k, strategy, nreps = 10000){
   return(prob)
 }
 
-<<<<<<< HEAD:proj2.r
 prob_50_1_pone <- pone(50, 25, 1)
-=======
-prob <- Pone(n, 52, strategy = 3)
-prob
->>>>>>> 9bf3ab8026ac45f95409b2e4822f9775716381f9:practical2.r
 
 prob_50_2_pone <- pone(50, 25, 2)
 
@@ -408,7 +403,3 @@ reshuffling of cards to boxes is:')
 cat(Prob_small_loop)
 
 
-<<<<<<< HEAD:proj2.r
-=======
-     
->>>>>>> 9bf3ab8026ac45f95409b2e4822f9775716381f9:practical2.r
