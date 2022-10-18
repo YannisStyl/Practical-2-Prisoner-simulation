@@ -128,7 +128,7 @@ Pone <- function(n, k, strategy, nreps = 10000){
   return(prob)
 }
 
-prob <- pone(n, 52, strategy = 3)
+prob <- Pone(n, 52, strategy = 3)
 prob
 
 
