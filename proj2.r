@@ -419,3 +419,8 @@ cat('The probability that there is no loop longer than 50 in a random
 reshuffling of cards to boxes is:')
 cat(Prob_small_loop)
 
+## The probability of all loops being smaller than 50, is similar to the value 
+## of Pall for n = 50. This is no coincidence, since the statements:
+## "All prisoners found their card" and "There was no loop bigger than 50" are
+## equivalent. This result confirms that the probability of all prisoners
+## finding their card, under strategy 1, is indeed high. 
