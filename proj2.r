@@ -7,12 +7,16 @@
 ##
 ##  Yannis Stylianou (s2448736), Kartik (s2407270), Wang Chuhan(s2324597) 
 
+## GitHub Repo: 
+##
+##  https://github.com/YannisStyl/Practical-2-Prisoner-simulation.git
+
+
 #--------------------------    Work Distribution   ----------------------------#
 
-## Yannis: General comment format, Pone function, dloop function
-## Kartik: dloop function, graph
-## Wang: Pall function
-
+## Yannis: General comment format, Pone function, dloop function (40.02 %)
+## Kartik: dloop function, graph (29.88 %)
+## Wang: Pall function (30.10 %)
 
 #---------------------------  Problem Description  ----------------------------#
  
@@ -30,8 +34,8 @@
 #--------------------------------   Task   ------------------------------------#
 
 ## We will estimate the probabilities of successfully finding the correct card, 
-## both for individual prisoners and for the whole group. We will follow and  
-## assess 3 strategies:
+## both for individual prisoners (Pone) and for the whole group (Pall).   
+## We will follow and assess 3 strategies:
 ##
 ## 1) Each prisoner starts at the box with their number on it, opens it and 
 ##    reads the number on the card: k, say. If k is not their prisoner number, 
@@ -175,6 +179,13 @@ Pone <- function(n, k, strategy, nreps = 10000){
   return(prob)
 }
 
+#Computing individual probabilities
+prob_5_1_pone <- pone(5, 5, 1)
+
+prob_5_2_pone <- pone(5, 5, 2)
+
+prob_5_3_pone <- pone(5, 5, 3)
+
 prob_50_1_pone <- pone(50, 25, 1)
 
 prob_50_2_pone <- pone(50, 25, 2)
@@ -262,6 +273,7 @@ Pall = function(n, strategy, nreps = 10000){
   return(prob)
 }
 
+#Computing joint probabilities
 prob_5_1_pall = Pall(5, strategy = 1)        ## The probability of 10 prisoners 
                                              ## escaping, using strategy 1.
 
@@ -377,7 +389,12 @@ xx <- c(1:(2*n))
 
 ## Plotting the probabilities of cycle lengths
 plot(xx, Prob, pch=19, cex=.5, xlab = "Cycle length", ylab = expression(P(X)))   
-                                                              
+
+cat('Individual probabilities for each strategy (n=5):')
+cat('Strategy 1:',prob_5_1_pone )
+cat('Strategy 2:',prob_5_2_pone )
+cat('Strategy 3:',prob_5_3_pone )
+cat('')                                                              
 cat('Individual probabilities for each strategy (n=50):')
 cat('Strategy 1:',prob_50_1_pone )
 cat('Strategy 2:',prob_50_2_pone )
@@ -401,5 +418,4 @@ cat('')
 cat('The probability that there is no loop longer than 50 in a random 
 reshuffling of cards to boxes is:')
 cat(Prob_small_loop)
-
 
